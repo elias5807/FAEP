@@ -29,6 +29,33 @@ onMounted(() => {
   // Nettoyage quand on quitte la page
   return () => pin.kill()
 })
+
+//engagements
+import EngagementCard from '../components/EngagementCard.vue'
+
+// On crée une liste propre avec tes données
+const engagements = [
+  {
+    id: 1,
+    titre: "La lutte contre la précarité",
+    texte: "Nous mettons en place des épiceries solidaires et des aides d'urgence pour tous les étudiants."
+  },
+  {
+    id: 2,
+    titre: "Défense des droits",
+    texte: "Représentation et accompagnement des étudiants face aux problématiques académiques."
+  },
+  {
+    id: 3,
+    titre: "Animation du campus",
+    texte: "Organisation d'événements culturels et sportifs pour dynamiser la vie étudiante."
+  }
+]
+
+// les associations
+import AssoCard from '../components/AssoCard.vue'
+
+
 </script>
 
 <template>
@@ -38,29 +65,28 @@ onMounted(() => {
       <p class="intro_text">Fédération des Associations d'Étudiants de Picardie</p>
     </section>
 
+
     <section class="engagement">
       <h1 class="engagement_titre">Nos engagements</h1>
+      
       <div class="engagement_content">
-        <div class="engagement_item">
-          <h2>Engagement 01</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel sapien eget nunc efficitur varius.</p>
-        </div>
-        <div class="engagement_item">
-          <h2>Engagement 02</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel sapien eget nunc efficitur varius.</p>
-        </div>
-        <div class="engagement_item">
-          <h2>Engagement 03</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel sapien eget nunc efficitur varius.</p>
-        </div>
+        <EngagementCard 
+          v-for="item in engagements" 
+          :key="item.id"
+          :title="item.titre"
+          :description="item.texte"
+        />
       </div>
-
     </section>
 
     <div ref="triggerRef">
       <div ref="sectionRef" class="horizontal-container">
         <div class="panel section-1"><h2>Nos associations</h2></div>
-        <div class="panel section-2"><h2>Projet 02</h2></div>
+        <div class="panel section-2">
+          <AssoCard title="Association 1" />
+          <AssoCard title="Association 2" />
+          <AssoCard title="Association 3" />        
+        </div>
         <div class="panel section-3"><h2>Projet 03</h2></div>
       </div>
     </div>
@@ -87,7 +113,7 @@ onMounted(() => {
   flex-direction: column; /* Force l'un en dessous de l'autre */
   justify-content: center; /* Centre verticalement */
   align-items: center;    /* Centre horizontalement */
-  background: green;
+  background: #007040;
   color: white;
   text-align: center;     /* Sécurité pour le texte multi-ligne */
 }
@@ -104,25 +130,29 @@ onMounted(() => {
 }
 
 .engagement {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column; /* Force l'un en dessous de l'autre */
+  flex-direction: column;
   align-items: center;
-  background: #111;
-  color: white;  
+  justify-content: center;
+  background: white;
+  padding: 50px 0;
 }
 
 .engagement_titre {
-  font-size: 4rem;
-  margin-bottom: 40px;    /* Espace entre le titre et les engagements */
-  margin-top: 5%;         /* Espace entre le haut de la section et le titre */
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 50px;
 }
 
 .engagement_content {
   display: flex;
-  margin-left: 2%;
-  margin-right: 2%;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
+
+
 
 .horizontal-container {
   display: flex;
