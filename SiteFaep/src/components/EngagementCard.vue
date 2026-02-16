@@ -16,8 +16,8 @@ defineProps({
 
 <style scoped>
 .engagement_item {
-  /* 1. Fond transparent avec la couleur FAEP (le 0.35 = 35% d'opacité) */
-  background: white; 
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 107, 62, 0.45);
   
   /* 2. L'effet de flou magique */
   backdrop-filter: blur(15px);
@@ -48,8 +48,7 @@ defineProps({
 /* Petit effet au survol pour rendre le site vivant */
 .engagement_item:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(0, 107, 62, 0.45);
+
 }
 
 .engagement_item h2 {

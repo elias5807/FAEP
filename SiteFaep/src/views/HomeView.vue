@@ -55,14 +55,16 @@ const engagements = [
 // les associations
 import AssoCard from '../components/AssoCard.vue'
 
-
+const associations = [
+  { id: 1, nom: "InfoContact", image: "../assets/BDElogo/infocontact.png", insta: "https://..." },
+];
 </script>
 
 <template>
   <div class="scroll-wrapper">
     <section class="intro">
       <h1 class="intro_titre">FAEP</h1>
-      <p class="intro_text">Fédération des Associations d'Étudiants de Picardie</p>
+      <p class="intro_text">Fédération des Associations Étudiantes Problématiques</p>
     </section>
 
 
@@ -81,13 +83,23 @@ import AssoCard from '../components/AssoCard.vue'
 
     <div ref="triggerRef">
       <div ref="sectionRef" class="horizontal-container">
-        <div class="panel section-1"><h2>Nos associations</h2></div>
-        <div class="panel section-2">
-          <AssoCard title="Association 1" />
-          <AssoCard title="Association 2" />
-          <AssoCard title="Association 3" />        
+        <div class="panel section-1">
+          <h2>Nos associations</h2>
         </div>
-        <div class="panel section-3"><h2>Projet 03</h2></div>
+
+        <div class="asso_grid">
+          <AssoCard 
+            v-for="asso in associations" 
+            :key="asso.id"
+            :title="asso.nom"
+            :image-url="asso.image"
+            :instagram-url="asso.insta"
+          />
+        </div>
+
+        <div class="panel section-3">
+          <h2>Projet 03</h2>
+        </div>
       </div>
     </div>
 
@@ -130,19 +142,26 @@ import AssoCard from '../components/AssoCard.vue'
 }
 
 .engagement {
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: white;
   padding: 50px 0;
+  background-image:url('../assets/JAE.png');
+  background-size: 100%;
+
 }
 
 .engagement_titre {
   color: white;
   font-size: 3rem;
   margin-bottom: 50px;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 107, 62, 0.45);
+  border-radius: 30px;
+  padding: 20px 40px;
 }
 
 .engagement_content {
@@ -151,8 +170,6 @@ import AssoCard from '../components/AssoCard.vue'
   justify-content: center;
   flex-wrap: wrap;
 }
-
-
 
 .horizontal-container {
   display: flex;
@@ -172,9 +189,31 @@ import AssoCard from '../components/AssoCard.vue'
 
 .section-1 { background-color: #ff4757; }
 .section-2 { background-color: #2f3542; }
-.section-3 { background-color: #ffa502; }
+.section-3 { background-color: #2f3542; }
 
 .scroll-wrapper {
   overflow-x: hidden; /* Empêche le scroll horizontal moche du navigateur */
+}
+
+/* --- MODIFICATIONS DANS TON <style> --- */
+
+.horizontal-container {
+  display: flex;
+  width: 300vw; /* Tes 3 sections */
+  height: 100vh;
+}
+
+.asso_grid {
+  width: 100vw; /* Chaque "page" doit faire exactement cette taille */
+  height: 100vh;
+  display: grid;
+  /* On ajuste pour que ça respire */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  /* ESSENTIEL : Si les 39 dépassent, on permet de scroller verticalement 
+     à l'intérieur de ce panneau précis */
+  overflow-y: auto; 
+  background-color: #2f3542; /* Remplace section-2 */
 }
 </style>
