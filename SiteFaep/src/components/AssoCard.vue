@@ -1,120 +1,170 @@
 <script setup>
-// Définition des props
 const props = defineProps({
   title: String,
   imageUrl: String,
   instagramUrl: String
 })
 
-// Fonction pour résoudre dynamiquement le chemin des images dans src/assets
-// Note : Si tu déplaces tes images dans le dossier 'public', cette fonction n'est plus nécessaire,
-// tu pourras juste utiliser :src="imageUrl"
+// Fonction pour résoudre dynamiquement le chemin des images dans Vite
 const getImageUrl = (path) => {
-  return new URL(path, import.meta.url).href
+  // On s'assure que path n'est pas vide pour éviter l'erreur au chargement
+  if (!path) return '';
+  return new URL(`${path}`, import.meta.url).href;
 }
 </script>
 
 <template>
   <div class="asso_item">
-    <h2>{{ title }}</h2>
+    <div class="instagram_overlay" v-if="instagramUrl">
+      <a :href="instagramUrl" target="_blank" class="insta_button">
+        Voir le profil Instagram
+      </a>
+    </div>
+
+    <h2 class="asso_title">{{ title }}</h2>
     
     <div class="item_container">
       <img :src="getImageUrl(imageUrl)" :alt="title" class="asso_img" />     
-      
-      <div v-if="instagramUrl" class="instagram_overlay">
-        <a :href="instagramUrl" target="_blank" class="insta_button">
-          Voir le profil Instagram
-        </a>
-      </div>
+    </div>
+
+    <div class="more_info">
+      En savoir Plus
     </div>
   </div>
 </template>
 
 <style scoped>
+/* --- Conteneur Principal : Carré et Petit --- */
 .asso_item {
-  background-color: black;
-  border: 5px solid #006b3e;
-  width: 320px;
-  height: 320px;
-  min-height: 350px; 
-  padding: 25px;
-  border-radius: 25px;
+  position: relative;
+  
+  /* --- LA NOUVELLE TAILLE DU CARRÉ --- */
+  width: 200px !important;
+  height: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+  min-height: 200px !important;
+  max-height: 200px !important;
+  
+  flex: none !important; 
+  /* ----------------------------------- */
+
+  background: black;
+  border: 2px solid #00a862; 
+  border-radius: 16px; 
+  padding: 15px; /* Un peu plus d'air à l'intérieur */
+  color: white;
   display: flex;
   flex-direction: column;
-  margin: 10px;
-  color: white;
+  overflow: hidden;
+  box-sizing: border-box;
   transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
 }
 
-.asso_item:hover {
-  transform: translateY(-5px);
-  border-color: #00a862; /* On éclaircit un peu le vert au survol */
+/* --- Titre --- */
+.asso_title {
+  color: #00a862;
+  font-size: 0.8rem; /* Très compact */
+  font-weight: 900;
+  margin: 0 0 5px 0; /* Marge sous le titre réduite */
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 1;
+  transition: filter 0.3s ease;
 }
 
-.asso_item h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  min-height: 3.5rem;
-  display: flex;
-  justify-content: center;
-  color:#00a862;
-}
-
+/* --- Zone de l'image (Prend tout l'espace carré restant) --- */
 .item_container {
   position: relative;
-  width: 100%;
-  flex-grow: 1; /* Prend l'espace restant dans la carte */
-  height: 220px;
-  overflow: hidden;
-  border-radius: 15px;
-  background-color: #1a1a1a; /* Fond sombre en attendant le chargement */
+  flex: 1; /* Occupe l'espace disponible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0; /* Important pour que flex fonctionne bien dans un petit espace */
+  margin-bottom: 5px; /* Laisse un tout petit peu d'espace pour le badge en bas */
 }
 
 .asso_img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; 
-  transition: filter 0.3s ease, transform 0.5s ease;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* L'image s'adapte sans être coupée dans le carré */
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
+/* --- Overlay Instagram --- */
 .instagram_overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 107, 62, 0.85);
+  inset: 0; 
+  background: rgba(0, 0, 0, 0.8); /* Fond un peu plus sombre pour le contraste */
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-  z-index: 2;
+  z-index: 10; 
+  padding: 10px; /* Pour éviter que le bouton ne touche les bords */
+}
+
+/* --- Bouton Instagram (Adapté au petit carré) --- */
+.insta_button {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+  /* Padding très fin pour faire rentrer le texte */
+  padding: 6px 10px; 
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.6rem; /* Police minuscule obligatoire pour faire tenir le texte */
+  border: 1px solid white;
+  transform: translateY(15px);
+  transition: transform 0.3s ease;
+  text-align: center;
+  line-height: 1.1;
+  max-width: 100%; /* Empêche le bouton de dépasser du carré */
+  white-space: normal; /* Autorise le texte à passer sur 2 lignes si vraiment nécessaire */
+}
+
+/* --- Badge "En savoir plus" --- */
+.more_info {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #004d2c;
+  border: 2px solid #00a862;
+  border-bottom: none;
+  border-right: none;
+  padding: 2px 6px; /* Ultra minimaliste */
+  border-top-left-radius: 8px; 
+  font-size: 0.5rem; /* Quasi illisible mais présent pour le style */
+  font-weight: bold;
+  color: #00ff8c;
+  z-index: 5;
+}
+
+/* --- ÉTATS AU SURVOL (HOVER) --- */
+.asso_item:hover {
+  transform: scale(1.05); 
+  border-color: #00ff8c;
 }
 
 .asso_item:hover .instagram_overlay {
   opacity: 1;
 }
 
+.asso_item:hover .insta_button {
+  transform: translateY(0); 
+}
+
 .asso_item:hover .asso_img {
-  filter: blur(3px);
-  transform: scale(1.1); /* Petit effet de zoom sur l'image au survol */
+  transform: scale(1.1); /* Zoom légèrement réduit pour rester dans le carré */
+  filter: blur(3px) brightness(0.4);
 }
 
-.insta_button {
-  background-color: white;
-  color: #006b3e;
-  padding: 12px 20px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.insta_button:hover {
-  background-color: #f0f0f0;
-  transform: scale(1.1);
+.asso_item:hover .asso_title {
+  filter: blur(2px);
+  opacity: 0.5; /* On efface un peu le titre au survol pour focaliser sur le bouton */
 }
 </style>

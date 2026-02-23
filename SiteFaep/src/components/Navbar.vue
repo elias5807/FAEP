@@ -4,8 +4,26 @@
     
     <ul class="nav-links">
       <li><a href="/">Accueil</a></li>
-      <li><a href="/bureau">Bureau</a></li>
-      <li><a href="#">Agorae</a></li>
+
+      <li 
+        class="dropdown" 
+        @mouseenter="isOpen3 = true" 
+        @mouseleave="isOpen3 = false"
+      >
+        <button class="dropdown-trigger">
+          Fédération
+          <span :class="['arrow', { 'arrow-up': isOpen3 }]">▼</span>
+        </button>
+
+        <transition name="fade-slide">
+          <ul v-if="isOpen3" class="dropdown-menu">
+            <li><a href="/bureau">Bureau</a></li>
+            <li><a href="#">Elus CROUS</a></li>
+            <li><a href="#">Elus Centraux</a></li>
+          </ul>
+        </transition>
+      </li>
+      <li><a href="/ago">Agorae</a></li>
 
       <li 
         class="dropdown" 
@@ -19,8 +37,11 @@
 
         <transition name="fade-slide">
           <ul v-if="isOpen" class="dropdown-menu">
-            <li><a href="#">IUT</a></li>
-            <li><a href="#">Ctadelle</a></li>
+            <li><a href="/iut">IUT</a></li>
+            <li><a href="/citadelle">Citadelle</a></li>
+            <li><a href="#">Sud</a></li>
+            <li><a href="#">Cathédrale</a></li>
+            <li><a href="#">Art</a></li>
           </ul>
         </transition>
       </li>
@@ -42,7 +63,7 @@
           </ul>
         </transition>
       </li>
-
+      <li><a href="#">Presse</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
   </nav>
@@ -53,6 +74,7 @@ import { ref } from 'vue';
 
 const isOpen = ref(false);
 const isOpen2 = ref(false);
+const isOpen3 = ref(false);
 </script>
 
 <style scoped>
