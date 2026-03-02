@@ -1,117 +1,153 @@
-<script setup>
-// Pas de logique spécifique nécessaire pour ce footer statique
-</script>
-
 <template>
-    <footer class="site-footer">
-        <div class="footer-content">
-            <img src="../assets/weec2.png" alt="Photo de groupe FAEP" class="footer-group-image" />
+  <footer class="faep-footer">
+    <h2 class="main-title">FAEP Partout</h2>
+
+    <div class="footer-grid">
+        <div class="social-links">
+            <h3 class="column-title">Nos Réseaux</h3>
+            <div class="item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="brand-icon">
+                <span class="label">la FAEP</span>
+            </div>
+            <div class="item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" class="brand-icon">
+                <span class="label">FAEP</span>
+            </div>
         </div>
-        
-        <div class="footer-actions">
-            <a href="#" class="footer-btn btn-legal">Mentions légales</a>
-            <a href="#" class="footer-btn btn-contact">Nous contacter</a>
+
+        <div class="grid-col center">
+            <img src="../assets/weec2.png" alt="Logo FAEP" class="footer-logo">
         </div>
-    </footer>
+        <div class="grid-col right">
+            <h3 class="column-title">Un Problème ?<br>une Question ?</h3>
+            <div class="item">
+                <div class="mail-circle">
+                    <span class="envelope">✉</span>
+                </div>
+                <a href="mailto:Mesdroits@faep.fr" class="label mail-link">Mesdroits@faep.fr</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="bottom-bar-button1"><a href="#">Mentions légales</a></div>
+      <div class="bottom-bar-button2"><a href="#">Nous contacter</a></div>
+    </div>
+  </footer>
 </template>
 
 <style scoped>
-/* --- Le Footer Principal --- */
-.site-footer {
-    position: relative;
-    background-color: #107c41; /* Vert uni du fond */
-    width: auto;
-    align-items: flex-start;
-    /* Plus de padding pour que le footer moule l'image */
-    padding: 0;
-    overflow: hidden; /* Coupe tout ce qui dépasse */
-    
-    display: flex;
-    justify-content: center;
+.faep-footer {
+  background-color: #003d1e; /* Le vert très foncé de l'image */
+  color: #1db954; /* Le vert fluo pour les textes importants */
+  font-family: 'Arial Black', 'Arial', sans-serif; /* Pour l'aspect gras et moderne */
+  position: relative;
+  overflow: hidden;
+  border-bottom: 15px solid #003615;
+  border-right: 15px solid #003615;
+  border-left: 15px solid #003615;
+}
+
+/* "FAEP Partout" en haut au centre */
+.main-title {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 50px;
+  color: #1db954; 
+  letter-spacing: -2px;
+}
+
+.footer-grid {
+  display: flex;  
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.social-links{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  text-decoration: none;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.footer-logo {
+  width: 100%;
+  height: auto;
+  rotate: -90deg;
+  margin-top: -70%;
+}
+
+.mail-circle {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.envelope {
+  color: #003615;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 100%;
+  padding-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.bottom-bar a {
+  color: #1db954;
+  text-decoration: none;
+  background-color: #003615;
+  margin-bottom: 0;
+}   
+
+.bottom-bar-button1 {
+  background-color: #003615;
+  padding: 10px 20px;
+  border-radius: 5px 45px 5px 5px;
+}
+
+.bottom-bar-button2 {
+  background-color: #003615;
+  padding: 10px 20px;
+  border-radius: 45px 5px 5px 5px;
+}
+
+/* Responsive pour tablettes et mobiles */
+@media (max-width: 900px) {
+  .main-title { font-size: 2.5rem; }
+  .footer-grid {
+    flex-direction: column;
     align-items: center;
-    
-    /* Hauteur minimale arbitraire pour laisser de la place à l'image tournée. 
-       Ajuste cette valeur selon la longueur de ton image ! */
-    min-height: 100px;
-    max-height: 260px; 
-    border-right: 6px solid #0d6334; /* Bordure droite plus épaisse */
-    border-bottom: 6px solid #0d6334;
-    border-left: 6px solid #0d6334;
-}
-
-/* --- L'Image du Groupe --- */
-.footer-group-image {
-    /* La fameuse rotation */
-    transform: rotate(-90deg); 
-    max-height: 100vw; 
-    object-fit: contain;
-    z-index: 1; /* Reste sous les boutons */
-}
-
-.footer-actions {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 45px;
-    display: flex;
-    justify-content: space-between;
-    z-index: 10;
-}
-
-.footer-btn {
-    position: relative;
-    display: flex;
-    align-items: center;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 0.95rem;
-    z-index: 1;
-}
-
-.btn-legal {
-    padding: 0 40px 0 20px; 
-}
-
-.btn-legal::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -20px;
-    width: 100%;
-    height: 100%;
-    background-color: #0d6334;
-    transform: skewX(35deg);
-    transform-origin: bottom left;
-    z-index: -1;
-}
-
-.btn-contact {
-    padding: 0 20px 0 40px;
-}
-
-.btn-contact::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -20px;
-    width: 100%;
-    height: 100%;
-    background-color: #0d6334;
-    transform: skewX(-35deg);
-    transform-origin: bottom right;
-    z-index: -1;
-}
-
-@media (max-width: 768px) {
-    .site-footer {
-        min-height: 350px;
-    }
-    .footer-btn {
-        font-size: 0.8rem;
-    }
-    .btn-legal { padding: 0 30px 0 10px; }
-    .btn-contact { padding: 0 10px 0 30px; }
+    gap: 40px;
+  }
+  .right { align-items: center; text-align: center; }
+  .grid-col.center { order: -1; } /* Logo passe en haut sur mobile */
 }
 </style>

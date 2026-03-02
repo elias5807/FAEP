@@ -35,26 +35,14 @@ onMounted(() => {
   }, 100); // 100ms de sécurité pour le rendu des composants
 });
 
-//engagements
-import EngagementCard from '../components/EngagementCard.vue'
+//Faep en chiffres
+import FaepCard from '../components/FaepCard.vue'
 
-// On crée une liste propre avec tes données
-const engagements = [
-  {
-    id: 1,
-    titre: "La lutte contre la précarité",
-    texte: "Nous mettons en place des épiceries solidaires et des aides d'urgence pour tous les étudiants."
-  },
-  {
-    id: 2,
-    titre: "Défense des droits",
-    texte: "Représentation et accompagnement des étudiants face aux problématiques académiques."
-  },
-  {
-    id: 3,
-    titre: "Animation du campus",
-    texte: "Organisation d'événements culturels et sportifs pour dynamiser la vie étudiante."
-  }
+const faepChiffres = [
+  { chiffre: "1200", description: "Étudiants représentés" },
+  { chiffre: "34", description: "Associations" },
+  { chiffre: "15", description: "Événements par an" },
+  { chiffre: "21", description: "Chromosome de Jared" }
 ]
 
 // les associations
@@ -101,32 +89,28 @@ const associations = [
   { id: 38, nom: "BNA", image: "../assets/BDElogo/bna.png", insta:"https://..."},
 ];
 
+
 import Footer from '../components/Footer.vue'
+import Carroussel from '@/components/Carroussel.vue'
 </script>
 
 <template>
   <div class="scroll-wrapper">
     <section class="intro">
       <h1 class="intro_titre">FAEP</h1>
-      <p class="intro_text">Fédération des Associations Étudiantes Problématiques</p>
+      <p class="intro_text">Fédération des Associations Étudiantes Picardes</p>
     </section>
 
-
     <section class="engagement">
-      <h1 class="engagement_titre">Nos engagements</h1>
+      <h1 class="engagement_titre">FAEP en chiffres</h1>
       
       <div class="engagement_content">
-        <EngagementCard 
-          v-for="item in engagements" 
-          :key="item.id"
-          :title="item.titre"
-          :description="item.texte"
+        <FaepCard 
+          v-for="item in faepChiffres" 
+          :key="item.chiffre"
+          :chiffre="item.chiffre"
+          :description="item.description"
         />
-      </div>
-      <div class="engagement_stat">
-          Avec notre trentaine d'associations, nos 5000 paniers solidaires distribuées et nos 
-          800 beneficiaires de l'AGORAé nous sommes fiers de notre impact concret sur la vie étudiante
-          et notre contribution à un campus plus solidaire et dynamique.
       </div>
     </section>
 
@@ -153,7 +137,7 @@ import Footer from '../components/Footer.vue'
     </div>
 
     <section class="outro">
-      <h1>Nos projets</h1>
+      <Carroussel />
     </section>
   </div>
   <Footer />
@@ -165,7 +149,7 @@ import Footer from '../components/Footer.vue'
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #111;
+  background:#007040;
   color: white;
 }
 
@@ -217,8 +201,9 @@ import Footer from '../components/Footer.vue'
 .engagement_content {
   display: flex;
   gap: 30px;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
+
 }
 
 .engagement_stat {
@@ -240,6 +225,7 @@ import Footer from '../components/Footer.vue'
   display: flex;
   width: 400vw; /* 3 sections de 100vw chacune */
   height: 100vh;
+  background-image: url('../assets/colorun.png');
 }
 
 .panel {
@@ -252,9 +238,11 @@ import Footer from '../components/Footer.vue'
   font-size: 5rem;
 }
 
-.section-1 { background-color: #2f3542; }
-.section-2 { background-color: #2f3542; }
-.section-3 { background-color: #2f3542; }
+
+.section-1 { background-color: #007040; }
+.section-2 { background-color:#007040; }
+.section-3 { background-color:#007040; }
+
 
 .scroll-wrapper {
   overflow-x: hidden; /* Empêche le scroll horizontal moche du navigateur */
@@ -270,7 +258,7 @@ import Footer from '../components/Footer.vue'
   min-width: 200vw; 
   height: 100vh;
   padding: 40px;
-  background-color: #2f3542;
+  background-color:#007040;
 
   display: flex;
   flex-direction: column;
@@ -311,13 +299,14 @@ import Footer from '../components/Footer.vue'
   /* Supprime le min-width fixe, laisse les cartes pousser la largeur */
   height: 100vh;
   padding: 1.12%; /* Réduit un peu le padding pour gagner de la place */
-  background-color: #2f3542;
+  background-color: #007040;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: flex-start;
   gap: 15px;
   flex-shrink: 0; /* Très important pour ne pas être écrasé */
+  padding-top: 1.5%;
 }
 
 .asso_grid > * {
@@ -330,6 +319,7 @@ import Footer from '../components/Footer.vue'
 .scroll-wrapper {
   overflow-x: hidden; /* Empêche le scroll horizontal parasite du navigateur */
   width: 100%;
+
 }
 
 .horizontal-container {
@@ -342,16 +332,29 @@ import Footer from '../components/Footer.vue'
 
 /* On s'assure que la section Outro commence bien APRES l'animation GSAP */
 .outro {
-  position: relative; 
-  z-index: 10;
-  width: 100vw;
-  height: 100vh;
-  background-color: #111;
-  background-image: url('../assets/distribution.png');
+  display: flex;             /* Aligne les cartes en ligne */
+  gap: 20px;                /* Espace entre les cartes */
+  padding: 20px;
+  overflow-x: auto;         /* Active le scroll horizontal */
+  scroll-behavior: smooth;  /* Rend le défilement fluide */
+  height: auto;
   
-  /* Les ajouts pour le centrage */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover; /* Ou "contain" selon l'effet voulu */
+  /* Propriétés de "Snap" pour un effet carrousel pro */
+  scroll-snap-type: x mandatory; 
+  
+  /* Cache la barre de défilement sur les navigateurs modernes */
+  scrollbar-width: none;    /* Firefox */
+  -ms-overflow-style: none;  /* IE/Edge */
+}
+
+/* Cache la barre de défilement sur Chrome/Safari */
+.outro::-webkit-scrollbar {
+  display: none;
+}
+
+/* On s'assure que les cartes ne rétrécissent pas et s'aimantent au bord */
+.outro > * {
+  flex: 0 0 auto;           /* Empêche les cartes de s'écraser */
+  scroll-snap-align: center; /* La carte s'aimante au centre du conteneur */
 }
 </style>

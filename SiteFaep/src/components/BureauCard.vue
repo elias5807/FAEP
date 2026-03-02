@@ -13,16 +13,15 @@ const getImageUrl = (path) => {
 </script>
 
 <template>
-    <div class="card">  
-        <h2 class="titre_item">{{ titre }}</h2>
+    <div class="card">
+        <div class="nom_item">
+            {{ nom }}
+        </div>
         
         <div class="img_container">
             <img :src="getImageUrl(imageUrl)" :alt="nom" class="asso_img" /> 
         </div>
-        
-        <div class="nom_item">
-            {{ nom }}
-        </div>
+        <h2 class="titre_item">{{ titre }}</h2>
     </div>
 </template>
 

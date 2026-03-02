@@ -11,7 +11,7 @@ import Footer from '../components/Footer.vue'
             <div class="bureau_container">   
                 <BureauCard nom="BERTRAND Florian" imageUrl="../assets/Bureau/president.png" titre="Président"/>
                 <BureauCard nom="LECOMPTE Julia" imageUrl="../assets/Bureau/julia.png" titre="Secrétaire en charge de la Formation"/>
-                <BureauCard nom="DOMBROWSKI Jean" imageUrl="../assets/Bureau/jean.png" titre="VPG"/>
+                <BureauCard nom="DOMBROWSKI Jean" imageUrl="../assets/Bureau/jean.png" titre="VPG en charge de la Communication"/>
                 <BureauCard nom="MAHMOUD Lara" imageUrl="../assets/Bureau/lara.png" titre="Trésorière"/>
             </div>
         </div>
